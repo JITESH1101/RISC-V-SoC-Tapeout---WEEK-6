@@ -1,5 +1,3 @@
-Here is the detailed documentation of your learnings from the RISC-V SoC tapeout program, based on the images and topic order you provided.
-
 ## 1. Introduction to QFN-48 Package, Chip, Pads, Core, Die, and IPs
 
 It was learned that the physical chip is housed within a Package. The specific type identified was a QFN-48, which stands for Quad Flat No-leads.
