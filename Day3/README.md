@@ -502,10 +502,159 @@ F a l l   t r a n s i t i o n   t i m e = T i m e   t a k e n   f o r   o u t p 
 
    <img width="1389" height="726" alt="rise_Calc_50%" src="https://github.com/user-attachments/assets/209c9ca4-9b41-4c84-82d4-6b095c817234" />
 
+ R i s e   C e l l   D e l a y = 2.21144 − 2.15008 = 0.06136   n s = 61.36   p s
+
+Fall Cell Delay Calculation
+F a l l   C e l l   D e l a y = T i m e   t a k e n   f o r   o u t p u t   t o   f a l l   t o   50 % − T i m e   t a k e n   f o r   i n p u t   t o   r i s e   t o   50 %
+50 %   o f   3.3   V = 1.65   V 
+
    For fall,
 
    <img width="1366" height="757" alt="fall_50%_waveform" src="https://github.com/user-attachments/assets/ffcdba5d-8e18-4852-a027-10e2d56483b3" />
 
    <img width="960" height="715" alt="fall_calc_50%" src="https://github.com/user-attachments/assets/c595c1d1-60b7-4834-b6ba-8dbd2af3360d" />
+
+  F a l l   C e l l   D e l a y = 4.07 − 4.05 = 0.02   n s = 20   p s 
+
+
+ ## DRC rules and check
+
+ Go to home directory and enter the following commands to download and verify the drc checks
+
+ ```
+ # Change to home directory
+cd
+
+# Command to download the lab files
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+# Since lab file is compressed command to extract it
+tar xfz drc_tests.tgz
+
+# Change directory into the lab folder
+cd drc_tests
+
+# List all files and directories present in the current directory
+ls -al
+
+# Command to view .magicrc file
+gvim .magicrc
+
+# Command to open magic tool in better graphics
+magic -d XR &
+```
+
+<img width="843" height="214" alt="wget_Tests_drc" src="https://github.com/user-attachments/assets/ea244044-9c61-487f-bd58-3eda75b18a52" />
+
+the following is the picture of .magicrc file
+
+<img width="1280" height="768" alt="magicrc" src="https://github.com/user-attachments/assets/23d1478a-45c6-492b-96db-9836c038f672" />
+
+Now open the magic tool by command ``magic -d XR &`` open met3 file
+
+<img width="1280" height="768" alt="met3" src="https://github.com/user-attachments/assets/89b88878-68e6-4ea7-baf6-3fc5f23fd16b" />
+
+Now to create via 2 enter the following commands in the console below
+
+<img width="760" height="322" alt="MET3_POLY_CONSOLE" src="https://github.com/user-attachments/assets/4a960cba-fb8e-4b27-a29a-2d3a7d4f8066" />
+
+then we get to see the via formation
+
+<img width="956" height="594" alt="MET3_POLY" src="https://github.com/user-attachments/assets/4af24c98-4d50-41db-b0b5-0799f80eee84" />
+
+- Poly rules
+
+  <img width="1048" height="1144" alt="poly_rules" src="https://github.com/user-attachments/assets/b5c45fc8-421f-4b9a-9471-e9fda7650f73" />
+
+Incorrectly implemented poly.9 , no drc violation
+
+<img width="1216" height="743" alt="load_poly" src="https://github.com/user-attachments/assets/497eb2bd-8893-4dca-adab-34f0f6185daf" />
+
+while this is running , make the following changes to the ``sky130A.tech`` file 
+
+<img width="918" height="440" alt="sky130A_tech_change1" src="https://github.com/user-attachments/assets/dc2a1557-2458-4c11-bf94-7658339735e1" />
+
+<img width="750" height="218" alt="sky130A_tech_change2" src="https://github.com/user-attachments/assets/0f0be5d7-58b8-4265-9a76-03aa5bfe69f3" />
+
+Now to load these changes , enter the following command
+
+```
+# Loading updated tech file
+tech load sky130A.tech
+
+# Must re-run drc check to see updated drc errors
+drc check
+
+# Selecting region displaying the new errors and getting the error messages 
+drc why
+```
+
+then we get to see that it is correctly implemented
+
+<img width="1405" height="806" alt="magic_window with rule implemented" src="https://github.com/user-attachments/assets/9f749eef-4126-483b-bcb3-b1cce3acbba5" />
+
+<img width="931" height="346" alt="Screenshot 2025-11-11 191918" src="https://github.com/user-attachments/assets/b0d1200c-6f04-42db-9051-ed5562d8e4de" />
+
+
+- Incorrectly implemented difftap.2 simple rule correction
+
+  DIFFTAP rules
+
+  <img width="1396" height="705" alt="difftap_rules" src="https://github.com/user-attachments/assets/e9f8d229-e392-4b4c-aeed-4b36a136627b" />
+
+  the following is the incorrect implementation
+
+  <img width="1407" height="782" alt="difftap 2_rule" src="https://github.com/user-attachments/assets/8c057bd3-66ba-4010-9e29-66e2dae049f6" />
+
+  the following is the changes made to the tech file in drc
+
+  <img width="1370" height="610" alt="drc_update_sky130A_Tech" src="https://github.com/user-attachments/assets/a3ad9d01-d702-4751-8321-c5915e756066" />
+
+  Now it is correctly implemented by loading the techfile again as done above
+
+  <img width="1403" height="724" alt="difftap_2_rule_implemented" src="https://github.com/user-attachments/assets/83c16ef7-f032-4677-b949-62a20c43522a" />
+
+  - Incorrectly implemented nwell.4 complex rule correction
+
+  NWELL RULES
+
+  <img width="1410" height="740" alt="nwell2_rules" src="https://github.com/user-attachments/assets/3b20dc3c-528a-4bf0-8541-16038d7da83e" />
+
+  The incorrectly implemented one is as follows
+
+  <img width="1403" height="761" alt="nwell2_error" src="https://github.com/user-attachments/assets/f62f5851-ebf2-4f9d-9076-283588bbe252" />
+
+    the change in tech file for drc is as follows
+
+  <img width="1053" height="626" alt="drc_update_nwell2" src="https://github.com/user-attachments/assets/23b3e5b3-c06e-4400-8e88-af2c1859b4e4" />
+
+  <img width="1251" height="656" alt="drc_update_nwell2 1" src="https://github.com/user-attachments/assets/a7a70588-9222-4d23-9565-6b211c24d4fa" />
+
+  Now by loading the tech file again as done above we get the correct implementation for the observed drc
+
+  <img width="1408" height="747" alt="nwell_Rule_implemented" src="https://github.com/user-attachments/assets/69b6b4d9-1ad6-4383-a364-7be23648de5b" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
