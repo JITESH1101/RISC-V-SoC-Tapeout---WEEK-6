@@ -1,3 +1,4 @@
+## DAY2
 ## 1. Utilization factor and aspect ratio
 
 ### Core vs. Die Concepts:
