@@ -471,6 +471,10 @@ plot y vs time a
 
   <img width="1060" height="591" alt="rise_transition_time" src="https://github.com/user-attachments/assets/1aacb12f-ccf6-4ad3-aaa6-fffe13dd0f77" />
 
+   Rise   transition   time = Time   taken   for   output   to   rise   to   80% − Time   taken   for   output   to   rise   to   20%
+                  20 %   of   output = 660 m V
+                  80 %   of   output = 2.64 V 
+
    Fall Transition Time calculations
 
    At 20%,
@@ -482,6 +486,13 @@ plot y vs time a
    <img width="1394" height="761" alt="fall_80%_waveform" src="https://github.com/user-attachments/assets/503908ef-a4df-4723-b62d-601cf19ea812" />
 
    <img width="962" height="710" alt="fall_transition_time" src="https://github.com/user-attachments/assets/612d331d-49d1-4b03-ae65-34a3f4c394cd" />
+
+ R i s e   t r a n s i t i o n   t i m e = 2.24638 − 2.18242 = 0.06396   n s = 63.96   p s
+
+Fall transition time calculation
+F a l l   t r a n s i t i o n   t i m e = T i m e   t a k e n   f o r   o u t p u t   t o   f a l l   t o   20 % − T i m e   t a k e n   f o r   o u t p u t   t o   f a l l   t o   80 %
+20 %   o f   o u t p u t = 660   m V
+80 %   o f   o u t p u t = 2.64   V 
 
    Now ,at 50%,
 
