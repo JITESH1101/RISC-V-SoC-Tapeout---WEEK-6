@@ -209,8 +209,58 @@ pdks/
         ├──  openroad/,  drc/,  lvs/,  pex/
 ```
 
+The following is the working directory all required files involved in the process
+
+<img width="1280" height="768" alt="working_directory" src="https://github.com/user-attachments/assets/8475e016-ff0e-4ff9-9bd5-7604749b224a" />
+
+Now lets invoke the tool and start the design in interactive mode
+
+```
+# Enter OpenLANE directory
+cd OpenLane
+
+docker
+
+# Start interactive mode
+./flow.tcl -interactive
+```
+
+<img width="1056" height="274" alt="openlane_flow tcl_invoke" src="https://github.com/user-attachments/assets/68cbd117-2fef-4652-aaf6-ec496f4e95d8" />
+
+Now , Import openlane package
+
+```
+package require openlane 0.9
+```
+
+Now , prepare the design picorv32a
+
+```
+prep -design picorv32a
+```
+
+<img width="1214" height="635" alt="prep_Design" src="https://github.com/user-attachments/assets/9e2c77f9-68d4-4cd1-8adc-1662dadd7545" />
+
+By doing so , we get to see that it Creates organized directory structure,Merges Technology LEF (.tlef) with Cell LEF (.lef),Sets up configuration files,Prepares design for synthesis.
+
+Now, start the synthesis
+
+```
+run_synthesis
+```
+
+<img width="1216" height="741" alt="synthesis_picorv32a" src="https://github.com/user-attachments/assets/dde761d4-91c2-463f-94cd-86980a58cc3b" />
 
 
+The tool Reads RTL files,Maps to standard cells,Optimizes logic,Generates statistics,Creates gate-level netlist.
+
+Now we see the synthesis results
+
+<img width="259" height="655" alt="synthesis_results" src="https://github.com/user-attachments/assets/af523a36-3db4-4469-813c-44b7479ff993" />
+
+From this we get the dflop to total cells ratio as follows
+
+<img width="2334" height="1403" alt="flopratio" src="https://github.com/user-attachments/assets/cae252ac-6f51-42ed-ae83-1a0d0ce192f2" />
 
 
 
