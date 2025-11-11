@@ -199,6 +199,11 @@ Now to view the floorplan result , using magic software , we enter the following
 
 <img width="1214" height="231" alt="floorplan_cmd_view" src="https://github.com/user-attachments/assets/1bd58c90-8185-42a7-9b5f-9c2af16f3482" />
 
+The def file generated after floorplan is as follows
+
+<img width="1280" height="768" alt="floorplan_Result( def)" src="https://github.com/user-attachments/assets/0ba8bea2-80d6-45b5-ad25-cda76e375f4e" />
+
+
 we see that the following windows pop up
 
 <img width="960" height="607" alt="magic_gui_floorplan" src="https://github.com/user-attachments/assets/d0f54cfb-fa59-4816-aa58-e45c5080f11c" />
@@ -207,12 +212,44 @@ Click S and then click V to allign the design to center of the screen
 
 <img width="1214" height="739" alt="s_and_v_toallign_floorplan" src="https://github.com/user-attachments/assets/9d23ca27-2820-4465-a384-e15dea7ddf1c" />
 
+Click Z to zoom into the design
+
+<img width="1280" height="768" alt="z_zoom" src="https://github.com/user-attachments/assets/a94f39bc-5f8d-4e8f-8bc4-a57d6bc1224d" />
+
+After zooming in we see tapcells, ports ,etc. Now to know more info about any particular cell, click S while it is zoomed in and go to  magic console and enter ``What``
+
+<img width="976" height="342" alt="what_info_cell" src="https://github.com/user-attachments/assets/71f63532-31e6-4053-81f4-9424867f3b9f" />
+
+
 The following is the  console terminal which also opened along with the magic tool terminal
 
 <img width="976" height="335" alt="floorplan_magic_console" src="https://github.com/user-attachments/assets/8ec34d7b-b169-4296-924b-8298fb66a4ad" />
 
 With this we get a good view of  how the floorplan is done
 
+Now to do the placement , enter the following command
+
+```
+run_placement
+```
+
+<img width="1280" height="768" alt="run_placement" src="https://github.com/user-attachments/assets/6b66256d-54e1-4366-9168-137ca1a940ae" />
+
+Now , we enter the following command to see the result of placement
+
+<img width="1211" height="162" alt="placement_magic" src="https://github.com/user-attachments/assets/8239ac86-a88c-4c31-9e23-fca12b69966d" />
+
+Now again we see the magic tool gui termminal and console pop up
+
+<img width="1280" height="768" alt="placement" src="https://github.com/user-attachments/assets/7ecab9b4-610a-4ada-b444-4011b8beaebb" />
+
+<img width="960" height="335" alt="placement_magic_console" src="https://github.com/user-attachments/assets/84c9c7ae-b937-4d53-a7d2-8e19798c8b4b" />
+
+BY zooming into the design we see the following
+
+<img width="1280" height="768" alt="placement1" src="https://github.com/user-attachments/assets/db3cb4eb-b8aa-4bd1-99fe-fa58782282cd" />
+
+With this placement is done
 ---
 
 ## 8. Netlist binding and initial place design
