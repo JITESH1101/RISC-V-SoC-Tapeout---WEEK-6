@@ -324,7 +324,7 @@ This step, also known as "**salicidation**," is designed to reduce the resistanc
 
 <img width="3526" height="1985" alt="Screenshot from 2025-11-10 21-56-00" src="https://github.com/user-attachments/assets/f7606721-0f71-4c93-b8ff-25031b022e9b" />
 
-<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-00-51" src="https://github.com/user-attachments/assets/ce2a0a63-c65a-497b-a9af-ed2d7ed93274" />
+
 
 **Annealing (Heating):**
 1.  The wafer is heated (annealed) in a Nitrogen (N₂) ambient at about 650-700°C for 60 seconds.
@@ -343,6 +343,8 @@ The unreacted Ti and TiN can be selectively etched away, leaving the stable TiSi
 ### Step 8: Higher Level Metal Formation
 This is the final, multi-step process to build the "wiring" (interconnects) that connects all the transistors together.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-00-51" src="https://github.com/user-attachments/assets/ce2a0a63-c65a-497b-a9af-ed2d7ed93274" />
+
 **Inter-Layer Dielectric (ILD) Deposition:**
 * A thick (~1μm) layer of SiO₂ is deposited over the entire wafer. This is often **BPSG** (borophosphosilicate glass), which flows at high temperatures to help planarize the surface.
 * The surface is made perfectly flat using **Chemical Mechanical Polishing (CMP)**. This is a crucial step for building multiple metal layers.
@@ -359,6 +361,8 @@ This is the final, multi-step process to build the "wiring" (interconnects) that
 2.  **Mask13** and photoresist are used to pattern the desired wiring paths for Metal 1.
 3.  The Aluminum is plasma etched, removing all Al except for the patterned "wires."
 4.  The resist is stripped.
+   
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-01-35" src="https://github.com/user-attachments/assets/3ec01206-0a1a-4ff7-93ce-bc018603e628" />
 
 
 **Higher Metal Layers (M2, M3, ...):**
@@ -369,8 +373,19 @@ This is the final, multi-step process to build the "wiring" (interconnects) that
 5.  **Mask15** is used to pattern the Metal 2 layer.
 6.  This process (deposit oxide, CMP, pattern vias, deposit metal, pattern metal) is repeated for all required metal layers.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-02-00" src="https://github.com/user-attachments/assets/5e0342e9-3f76-4a75-b368-dcffe640df50" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-02-24" src="https://github.com/user-attachments/assets/34c89845-abbc-4c2b-b0bc-8d871e514175" />
+
 **Final Pad Formation:**
 * A final passivation layer is deposited.
 * The **Final Mask16** is used to open contact holes on this top layer, exposing the pads for the S (Source), G (Gate), and D (Drain) terminals.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-02-37" src="https://github.com/user-attachments/assets/5f3a300b-5524-4c38-b0ad-415beee57d36" />
+
+
 This completes the fabrication, and the chip is ready for probing and packaging.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-02-42" src="https://github.com/user-attachments/assets/e779d833-78a8-4496-875f-afb4bacc0cac" />
+
+
