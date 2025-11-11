@@ -11,11 +11,16 @@ The package's pinout consists of 48 connections, which include:
 * **Serial Interface:** ser_tx (serial transmit) and ser_rx (serial receive).
 * **Other Pins:** analog_out, comp_inn, comp_inp, irq, and xclk.
 
+<img width="2659" height="1514" alt="Screenshot from 2025-10-31 10-52-04" src="https://github.com/user-attachments/assets/f10e5275-86c0-449b-9447-7d1d6b2118a8" />
+
 The internal structure of the chip is defined by several constituent parts.
 * The "**chip**" is the central component, with all internal logic connected to the external pads.
 * The "**Die**" is the entire rectangular piece of silicon.
 * The "**Core**" is the central area of the die where the primary logic is placed.
 * The "**PADS**" are the connection points on the perimeter of the die, interfacing between the internal core logic and the external package pins.
+
+<img width="2659" height="1423" alt="Screenshot from 2025-10-31 10-55-38" src="https://github.com/user-attachments/assets/d169222c-da83-427c-9a75-a7bee0da7b94" />
+
 
 The core itself is composed of multiple functional blocks, categorized as either Macros or Foundry IP's.
 * **Foundry IP's** (Intellectual Property) are pre-designed, verified blocks from the fabrication facility (the foundry). These include:
@@ -26,6 +31,8 @@ The core itself is composed of multiple functional blocks, categorized as either
 * **Macros** are other large, pre-designed blocks. The specific macros are:
     * RISCV SoC (the main processor core block)
     * gpio bank (the block managing all GPIO functions)
+
+<img width="2659" height="1423" alt="Screenshot from 2025-10-31 10-57-57" src="https://github.com/user-attachments/assets/ff68530b-fc2b-4e8a-bc09-e2ab020451e9" />
 
 Other integrated blocks on the die map include a PLL (Phase-Locked Loop) for clock generation and an SPI (Serial Peripheral Interface) block.
 
@@ -39,6 +46,9 @@ RISC-V illustrates the complete flow from a high-level architecture down to a ph
 * The **Implementation** is the concrete hardware design, written in a Hardware Description Language (HDL).
 * The example is a "picorv32 cpu core" (`picorv32.v`). This Verilog file contains parameter definitions (e.g., `ENABLE_COUNTERS`, `TWO_STAGE_SHIFTERS`, `CATCH_MISALIGNED`) and the core's sequential logic, such as the `always @(posedge clk)` block.
 * The **Layout** is the final physical realization of the design. The "qflow" view is the geometric representation of the transistors and metal interconnects that will be fabricated on silicon.
+
+<img width="3542" height="1970" alt="Screenshot from 2025-10-31 11-03-58" src="https://github.com/user-attachments/assets/e2b11f91-bfb3-4dd2-9d97-0a4f1473a33d" />
+
 
 This demonstrates the complete path: abstract Architecture (instructions) $\rightarrow$ hardware Implementation (RTL code) $\rightarrow$ physical Layout (GDSII file).
 
@@ -57,6 +67,8 @@ This process details the complete journey from a user-facing software applicatio
 * This binary code is interpreted by the hardware, which is first described by an "**RTL snippet of hardware**" (Verilog code) that "understands instructions like 'add x6, x10, x6'".
 * This RTL description is fed into a synthesis tool to create a "**Synthesized netlist**," a gate-level representation of the logic (using MUXes, AND gates, flip-flops, etc.).
 * Finally, this netlist undergoes "**Physical Design Implementation**" to create the final Hardware layout. This layout shows the physical placement of cells (DECAP cells, etc.) and the routing for outputs like Dout1, Dout2, Dout3, and Clk Out.
+
+<img width="3542" height="1970" alt="Screenshot from 2025-10-31 11-22-15" src="https://github.com/user-attachments/assets/98b5e6b0-1995-48d5-bad3-868e6daa6b02" />
 
 ---
 
@@ -90,6 +102,8 @@ A performance table for the sky130_osu_18T_hs standard cell library details Freq
 The "Simplified RTL to GDSII Flow" is the core process of converting hardware description code (RTL) into a final physical layout file (GDSII) for fabrication.
 The flow begins with RTL as the primary design input and uses the PDK as the technology input for all stages.
 The main stages of this flow are: Synth $\rightarrow$ FP+PP $\rightarrow$ Place $\rightarrow$ CTS $\rightarrow$ Route $\rightarrow$ Sign Off.
+
+<img width="3542" height="1970" alt="Screenshot from 2025-10-31 11-30-32" src="https://github.com/user-attachments/assets/630fb8e3-3ab0-4db5-af50-cabf4618e1a5" />
 
 1.  **Synthesis (Synth):**
     * This stage "Converts RTL to a circuit out of components from the standard cell library (SCL)."
@@ -125,6 +139,7 @@ The main stages of this flow are: Synth $\rightarrow$ FP+PP $\rightarrow$ Place 
     * **Timing Verification:**
         * **Static Timing Analysis (STA):** Checks that the design meets all timing requirements (setup and hold).
 
+
 ---
 
 ## 6. Introduction to OpenLANE and Strive Chipsets
@@ -136,6 +151,8 @@ The features for the various SoCs in the family (striVe, striVe 2, striVe 2a, st
 * "Synthesized 1 Kbytes SRAM"
 * "1 Kbytes OpenRAM block"
 * DFT (in striVe 6)
+
+<img width="3542" height="1970" alt="Screenshot from 2025-10-31 11-44-09" src="https://github.com/user-attachments/assets/7a9a9a1b-57a1-461d-94c2-068743964b1d" />
 
 The open-source ecosystem partners include Skywater, Google, OpenROAD, and Efabless.
 The "OpenLANE ASIC Flow" has a "Main Goal": to "Produce a clean GDSII with no human intervention (no-human-in-the-loop)."
