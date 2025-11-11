@@ -388,4 +388,113 @@ This completes the fabrication, and the chip is ready for probing and packaging.
 
 <img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-02-42" src="https://github.com/user-attachments/assets/e779d833-78a8-4496-875f-afb4bacc0cac" />
 
+## Lab Task
 
+-  Clone the github repository and enter the following commands to open the  custom inverter standard cell design 
+
+```
+# Change directory to openlane
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Clone the repository with custom inverter design
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+
+# Change into repository directory
+cd vsdstdcelldesign
+
+# Copy magic tech file to the repo directory for easy access
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+
+# Check contents whether everything is present
+ls
+
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+<img width="1198" height="538" alt="vsdstdcelldesign_techfile_magic" src="https://github.com/user-attachments/assets/62c4538e-0571-4832-b462-3c79db4ee205" />
+
+The loaded design in magic tool is as follows
+
+<img width="1280" height="768" alt="magic_sky130A_inv" src="https://github.com/user-attachments/assets/1630322e-fea3-499c-8b43-548cb2206097" />
+
+- Spice extraction of inverter in magic tool
+
+Commands for spice extraction of the custom inverter layout to be used in tkcon window of magic
+
+```
+# Check current directory
+pwd
+
+# Extraction command to extract to .ext format
+extract all
+
+# Before converting ext to spice this command enable the parasitic extraction also
+ext2spice cthresh 0 rthresh 0
+
+# Converting to ext to spice
+ext2spice
+```
+
+<img width="845" height="214" alt="parasite_extract_files" src="https://github.com/user-attachments/assets/88401e90-fa86-4125-acd7-50f949d4f122" />
+
+
+<img width="980" height="339" alt="extract_parasites" src="https://github.com/user-attachments/assets/ff0b7cc1-57fd-4de9-a8d9-faf35d56f374" />
+
+the following is the extracted spice file
+
+<img width="1001" height="371" alt="extracted_spice_File" src="https://github.com/user-attachments/assets/8eefcf9a-29f5-4274-b602-b490b9156bac" />
+
+- Ngspice Simulation
+
+  Enter the following command to run ngpsice simulation and also to get the plot of y vs time a
+
+```
+ngspice sky130_inv.spice
+plot y vs time a
+```
+<img width="1280" height="768" alt="nspice_sky130AINV SPICE" src="https://github.com/user-attachments/assets/7ee07130-5e5c-433f-8488-640903a45d1d" />
+
+<img width="1216" height="743" alt="plot_y vs time a" src="https://github.com/user-attachments/assets/d904ff25-565b-42fb-8a00-fe41106c72be" />
+
+- RISE TRANSITION TIME AND FALL TRANSITION TIME CALCULATIONS
+
+  For Rise calculations,
+
+  At 20%,
+
+  <img width="1398" height="771" alt="rise_20%_waveform" src="https://github.com/user-attachments/assets/9fe24853-e083-4cbd-8e3f-eef6d74ba25e" />
+
+  At 80%,
+
+  <img width="1417" height="780" alt="rise_80%_Waveform" src="https://github.com/user-attachments/assets/9171922f-40ca-4897-8852-8edf183fc6a3" />
+
+  <img width="1060" height="591" alt="rise_transition_time" src="https://github.com/user-attachments/assets/1aacb12f-ccf6-4ad3-aaa6-fffe13dd0f77" />
+
+   Fall Transition Time calculations
+
+   At 20%,
+
+   <img width="1387" height="763" alt="fall_20%_waveform" src="https://github.com/user-attachments/assets/b2b3bf81-f98f-412b-b5c4-a2c5d425585b" />
+
+  At 80%,
+
+   <img width="1394" height="761" alt="fall_80%_waveform" src="https://github.com/user-attachments/assets/503908ef-a4df-4723-b62d-601cf19ea812" />
+
+   <img width="962" height="710" alt="fall_transition_time" src="https://github.com/user-attachments/assets/612d331d-49d1-4b03-ae65-34a3f4c394cd" />
+
+   Now ,at 50%,
+
+   For Rise ,
+
+   <img width="1365" height="759" alt="rise_50%_waveform" src="https://github.com/user-attachments/assets/2ce13aff-4761-43d7-ac9a-65d8710ce40b" />
+
+   <img width="1389" height="726" alt="rise_Calc_50%" src="https://github.com/user-attachments/assets/209c9ca4-9b41-4c84-82d4-6b095c817234" />
+
+   For fall,
+
+   <img width="1366" height="757" alt="fall_50%_waveform" src="https://github.com/user-attachments/assets/ffcdba5d-8e18-4852-a027-10e2d56483b3" />
+
+   <img width="960" height="715" alt="fall_calc_50%" src="https://github.com/user-attachments/assets/c595c1d1-60b7-4834-b6ba-8dbd2af3360d" />
+
+    
