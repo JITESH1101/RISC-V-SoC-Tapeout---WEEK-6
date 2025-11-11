@@ -2,15 +2,15 @@
 
 This week's learning was focused on a comprehensive, end-to-end exploration of the open-source digital ASIC design flow, from high-level architecture down to the specifics of physical layout and verification. The journey began with an introduction to the RISC-V instruction set architecture and the physical context of a QFN-48 package, bridging the gap between software applications and the hardware they run on. A complete overview of the open-source digital ASIC design ecosystem was provided, setting the stage for a deep dive into the simplified RTL2GDS flow using tools like OpenLANE. The core principles of physical design were introduced, starting with floorplanning concepts such as utilization factor, aspect ratio, pre-placed cells, and power planning strategies involving de-coupling capacitors. This foundational knowledge was then extended to cell placement, timing analysis, and the critical role of standard cell libraries.
 
-Day1- Inception of open source EDA,OpenLANE and Sky130 PDK -https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day1/README.md
+- Day1- Inception of open source EDA,OpenLANE and Sky130 PDK -https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day1/README.md
 
-Day2- Goodfloorplan vs bad floorplan and introduction to library cells - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day2/README.md
+- Day2- Goodfloorplan vs bad floorplan and introduction to library cells - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day2/README.md
 
-Day3- Design library cell using Magic Layout and ngspice characterization - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day3/README.md
+- Day3- Design library cell using Magic Layout and ngspice characterization - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day3/README.md
 
-Day4- Pre-layout timing analysis and importance of good clock tree - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day4/README.md
+- Day4- Pre-layout timing analysis and importance of good clock tree - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day4/README.md
 
-Day5- Final steps for RTL2GDS using tritonRoute and openSTA - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day5/README.md
+- Day5- Final steps for RTL2GDS using tritonRoute and openSTA - https://github.com/JITESH1101/RISC-V-SoC-Tapeout---WEEK-6/blob/main/Day5/README.md
 
 # Conclusion
 
