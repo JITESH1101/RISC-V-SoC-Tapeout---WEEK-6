@@ -9,6 +9,8 @@ For the CMOS inverter schematic, the main nodes were identified as `in` (the inp
 
 The SPICE deck is a text-based representation of this schematic. The core of the deck is the **NETLIST Description**.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-35-04" src="https://github.com/user-attachments/assets/4623de38-904d-4901-94f7-6fd840b5666e" />
+
 The PMOS transistor (M1) was defined with the line:
 `M1 out in vdd vdd pmos W=0.375u L=0.25u`
 * **M1:** The name of the component.
@@ -29,6 +31,8 @@ The NMOS transistor (M2) was defined with the line:
 For a complete simulation, the SPICE deck was expanded beyond just the netlist.
 
 **MODEL Descriptions** are pointed to, which contain the complex parameters for the `pmos` and `nmos` models.
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-35-44" src="https://github.com/user-attachments/assets/a608ef30-9f93-481e-80b8-71b846f82962" />
+
 
 The **NETLIST Description** was completed by adding all circuit elements:
 * The transistors `M1` (pmos) and `M2` (nmos) were defined as before.
@@ -39,6 +43,8 @@ The **NETLIST Description** was completed by adding all circuit elements:
 **SIMULATION Commands** were included to control the simulation:
 * `.op`: A command to find the DC operating point of the circuit.
 * `.dc Vin 0 2.5 0.05`: This is the main DC sweep command. It instructs SPICE to vary the input voltage (`Vin`) from 0V to 2.5V in steps of 0.05V.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-36-24" src="https://github.com/user-attachments/assets/0abf1571-25b4-4806-af0c-572b9c070ab9" />
 
 **Model/Library Inclusion** is critical:
 * `.include tsmc_025um_model.mod`: This line includes the file containing the specific transistor model parameters.
@@ -65,12 +71,17 @@ Two different simulations were examined to understand this:
 1.  **Symmetric Inverter:** In the first case, `Wn=Wp=0.375u` and `Ln=Lp=0.25u`. This gives a ratio of `(Wn/Ln) = (Wp/Lp) = 1.5`. The resulting VTC curve was nearly symmetrical, and the switching threshold was found to be **Vm ~ 0.98v**.
 2.  **Skewed Inverter:** In the second case, the PMOS width was increased: `Wn=0.375u`, `Wp=0.9375u`. This gives `(Wn/Ln)=1.5` and `(Wp/Lp)=3.75`. Because the PMOS (pull-up) transistor is now stronger than the NMOS (pull-down) transistor, it "wins" the tug-of-war for a longer time. This shifts the transition point to the right, resulting in a higher switching threshold of **Vm ~ 1.2v**.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-37-37" src="https://github.com/user-attachments/assets/324b286a-fde5-4070-899b-479fdb27e45a" />
+
 The operating regions of the transistors were also analyzed across the VTC sweep:
 * **Vin (low, 0V):** PMOS is 'linear', NMOS is 'off'. Vout is high (2.5V).
 * **Vin (increasing):** PMOS is 'linear', NMOS is 'sat'. Vout begins to drop.
 * **Vin = Vm:** Both PMOS and NMOS are in 'sat'.
 * **Vin (increasing further):** PMOS is 'sat', NMOS is 'linear'. Vout drops sharply.
 * **Vin (high, 2.5V):** PMOS is 'off', NMOS is 'linear'. Vout is low (0V).
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-39-21" src="https://github.com/user-attachments/assets/48740c64-656b-49a6-90b6-62962fdfe81f" />
+
 
 ---
 
@@ -124,6 +135,8 @@ The entire process starts with a bare silicon wafer.
 * This substrate has high resistivity (around 5-50 ohms).
 * The doping level is low, approximately $10^{15} \text{ cm}^{-3}$. This low doping is important because the 'well' doping in later steps will be higher.
 * The silicon crystal orientation is (100).
+  
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-48-03" src="https://github.com/user-attachments/assets/3b469a23-898b-4f3d-be5d-7f550b3d0350" />
 
 ### Step 2: Creating Active Regions for Transistors (Mask1)
 This step defines where the transistors will be built, separating them from the insulating "field oxide."
@@ -132,16 +145,22 @@ First, a stack of layers is deposited on the P-substrate:
 2.  A **nitride** layer: ~80nm of Si₃N₄ (Silicon Nitride)
 3.  A **photoresist** layer: ~1μm of photoresist
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-49-03" src="https://github.com/user-attachments/assets/c9920039-c71e-4008-81b7-5b59622a6ebc" />
+
 **Photolithography** is then performed using **Mask1**. The mask patterns the photoresist.
 * The wafer is exposed to UV light. The light passes through the clear parts of Mask1, chemically altering the photoresist below.
 * The wafer is placed in a developing solution, which washes away the light-exposed photoresist.
 * The patterned photoresist now acts as a mask. The exposed Si₃N₄ is etched away.
 * The remaining photoresist is chemically removed, leaving a patterned Si₃N₄ layer.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-49-22" src="https://github.com/user-attachments/assets/e77e841a-f527-4bac-8d73-e2fed0d3b246" />
+
 The wafer is then placed in an oxidation furnace.
 * The Si₃N₄ layer acts as an "oxidation mask." Silicon not covered by Si₃N₄ is oxidized, growing a thick layer of SiO₂. This thick oxide is the **Field Oxide**.
 * This entire process is known as **LOCOS (Local Oxidation of Silicon)**.
 * A side effect called the "**Bird's beak**" was noted, where the field oxide tapers off and grows slightly under the edge of the nitride mask.
+  
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-50-36" src="https://github.com/user-attachments/assets/e31adc3d-4cfe-4f97-957e-f517e31ce3df" />
 
 Finally, the Si₃N₄ mask layer is stripped away, typically using hot phosphoric acid. The process now has defined "active regions" (bare silicon) surrounded by thick field oxide.
 
@@ -153,12 +172,18 @@ Finally, the Si₃N₄ mask layer is stripped away, typically using hot phosphor
 This step creates the doped regions (wells) in the P-substrate where the NMOS and PMOS transistors will be built.
 The process starts with the wafer from Step 2, which has active regions defined by field oxide.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-51-35" src="https://github.com/user-attachments/assets/13c6342a-b165-404f-b167-50ea21e01967" />
+
 **P-Well Formation:**
 1.  A layer of photoresist is applied.
 2.  **Mask2** is used, which has an opening over the area destined to become the P-well (the area for NMOS).
 3.  The wafer is exposed to UV light and developed, leaving a photoresist mask.
 4.  **Ion implantation** is performed using **Boron** (a P-type dopant) at an energy of approximately ~200keV. This dopes the exposed active region, creating the P-well.
 5.  The photoresist (Mask2) is then stripped.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-51-55" src="https://github.com/user-attachments/assets/679c16d4-048e-4e3f-bba8-890e3d4ca2ac" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-52-10" src="https://github.com/user-attachments/assets/b401b2c5-03a6-4485-a323-2eabbc43ee40" />
 
 **N-Well Formation:**
 1.  A new layer of photoresist is applied.
@@ -167,8 +192,15 @@ The process starts with the wafer from Step 2, which has active regions defined 
 4.  **Ion implantation** is performed using **Phosphorous** (an N-type dopant) at a higher energy, approximately ~400keV. This creates the N-well.
 5.  The photoresist (Mask3) is stripped.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-52-31" src="https://github.com/user-attachments/assets/84734a70-f344-417a-b88e-6c267d20b883" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-52-43" src="https://github.com/user-attachments/assets/a658f074-8f9a-4e6d-994d-1326b1f5018d" />
+
+
 **Drive-in:**
 * After both implants are complete, the wafer is placed in a high-temperature furnace. This step, often called "drive-in," activates the implanted dopants and causes them to diffuse deeper to form the final well profiles.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-52-57" src="https://github.com/user-attachments/assets/7c7e3444-74e5-4860-a488-c611215941a5" />
 
 ---
 
@@ -182,6 +214,14 @@ First, the concept of **Threshold Voltage (Vt)** was explained. This is the volt
 * To fine-tune the transistor's threshold voltages, special implants are used before the gate is built.
 * **Mask4** and photoresist are used to open a window over the P-well. **Boron** is implanted at ~60keV to adjust the Vt of the future NMOS device.
 * The resist is stripped. **Mask5** and new photoresist are used to open a window over the N-well. **Arsenic** is implanted to adjust the Vt of the future PMOS device.
+  
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-53-51" src="https://github.com/user-attachments/assets/ed011056-7730-456b-a71f-a941c682cd0a" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-54-05" src="https://github.com/user-attachments/assets/6896485a-8735-4c8b-82cc-82ee253760f9" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-54-12" src="https://github.com/user-attachments/assets/76fc93e1-0fbc-44e6-99cb-60017a889a75" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-54-15" src="https://github.com/user-attachments/assets/e2d81cbd-6531-45a7-a1ff-55af0ed5cdf1" />
 
 **Gate Stack Formation:**
 1.  After the Vt-adjust implants, the existing thin oxide (pad oxide) is etched/stripped using a dilute hydrofluoric (HF) solution.
@@ -191,10 +231,16 @@ First, the concept of **Threshold Voltage (Vt)** was explained. This is the volt
 5.  **Mask6** and photoresist are used to create a pattern for the gates.
 6.  The wafer undergoes an etch process, which removes all polysilicon except where it was protected by the resist. This leaves behind the final polysilicon gate structures.
 7.  The remaining photoresist is stripped.
+   
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-54-45" src="https://github.com/user-attachments/assets/216009eb-a91c-4fa9-b88a-a22e72ccf816" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-54-54" src="https://github.com/user-attachments/assets/3e3e4ad4-361f-42bc-97ee-83933e8f6f0f" />
 
 ---
 
 ## 💧 Lightly Doped Drain (LDD) Formation
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-55-57" src="https://github.com/user-attachments/assets/0724186a-054a-4a33-904c-ab34a514f345" />
 
 ### Step 5: Lightly Doped Drain (LDD) Formation
 This step is a crucial technique used in modern transistors to improve reliability.
@@ -204,6 +250,8 @@ The two main reasons for LDDs were explained:
 
 LDDs work by creating a more graded, lightly doped region (N- or P-) between the channel and the heavily doped (N+ or P+) drain. This spreads the voltage drop, reducing the peak electric field.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-56-38" src="https://github.com/user-attachments/assets/bfab2d9f-f7d8-41ac-a2fa-061492f3716c" />
+
 **LDD Implantation Process:**
 * **Mask7** and photoresist are used to cover the PMOS side (P-well) of the wafer.
 * A light **Phosphorous** (N-type) ion implant is performed. The poly gate acts as a "self-aligning" mask. This creates the **N- implant regions** (the LDDs) for the NMOS transistor.
@@ -211,6 +259,12 @@ LDDs work by creating a more graded, lightly doped region (N- or P-) between the
 * A new mask (implied **Mask8**) and photoresist are used to cover the NMOS side (N-well).
 * A light **Boron** (P-type) ion implant is performed, creating the **P- implant regions** for the PMOS transistor.
 * The resist is stripped.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-56-50" src="https://github.com/user-attachments/assets/76b6de9c-e436-490a-a407-f837af6cd9de" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-56-58" src="https://github.com/user-attachments/assets/e36e7422-0e7a-441e-92cc-7a7b122a65b0" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-57-22" src="https://github.com/user-attachments/assets/0537c47e-6d48-49fb-a613-5e3855935c81" />
 
 **Sidewall Spacer Formation:**
 1.  A layer of insulating material (e.g., ~0.1μm Si₃N₄ or SiO₂) is deposited over the entire wafer (the green layer).
@@ -225,17 +279,28 @@ LDDs work by creating a more graded, lightly doped region (N- or P-) between the
 This step creates the heavily doped source and drain contact regions. The LDD regions from the previous step will be "under" the spacers.
 * A thin **screen oxide** is grown over the wafer. This is to prevent the high-energy implants from "channeling," or traveling too deep into the crystal.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-57-55" src="https://github.com/user-attachments/assets/de7456db-8fb4-476a-80ce-77938399ab12" />
+
 **NMOS Source/Drain (N+) Implant:**
 1.  **Mask9** and photoresist are used to completely cover the PMOS device (P-well).
 2.  A heavy **Arsenic** (N-type) ion implant is performed.
 3.  The implant is blocked by the poly gate and the sidewall spacers. This is a self-aligned process. The **N+ region** forms in the exposed S/D area, while the N- LDD region is protected by the spacer, creating a perfect junction.
 4.  The resist is stripped.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-58-10" src="https://github.com/user-attachments/assets/8bb2433f-12ad-4f71-b145-de4b24c57bae" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-58-26" src="https://github.com/user-attachments/assets/b280b569-8e75-411c-a335-f6625a5deb06" />
+
 **PMOS Source/Drain (P+) Implant:**
 1.  **Mask10** and photoresist are used to cover the NMOS device (N-well).
 2.  A heavy **Boron** (P-type) ion implant is performed.
 3.  This creates the **P+ source and drain** regions for the PMOS.
 4.  The resist is stripped.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-58-32" src="https://github.com/user-attachments/assets/c96550b9-5b7f-4cce-90ab-86fc22c0449c" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 19-58-49" src="https://github.com/user-attachments/assets/cad5439f-3ff4-48eb-8927-a73671c3f7ff" />
+
 
 At this point, the fundamental transistor structures (Source, Drain, Gate, and Wells) are fully formed.
 
@@ -246,18 +311,27 @@ At this point, the fundamental transistor structures (Source, Drain, Gate, and W
 ### Step 7: Steps to form contacts and interconnects (local)
 This step, also known as "**salicidation**," is designed to reduce the resistance of the contacts.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 21-54-41" src="https://github.com/user-attachments/assets/d1848f50-bc5a-43bb-8d87-40650a7b05bd" />
+
 **HF Etch:**
 * First, the wafer is cleaned, and the thin screen oxide is etched away from the tops of the source, drain, and gate regions using a dilute HF solution. This exposes the bare silicon and polysilicon.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 21-55-33" src="https://github.com/user-attachments/assets/e5b7bc96-aff1-494e-8649-f84699dfd59b" />
 
 **Sputtering:**
 * **Titanium (Ti)** is deposited over the entire wafer surface.
 * The method used is **sputtering**, a physical vapor deposition process. In this process, high-energy Argon (Ar+) gas ions are shot at a Titanium target, physically knocking Ti atoms off, which then coat the wafer.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 21-56-00" src="https://github.com/user-attachments/assets/f7606721-0f71-4c93-b8ff-25031b022e9b" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-00-51" src="https://github.com/user-attachments/assets/ce2a0a63-c65a-497b-a9af-ed2d7ed93274" />
 
 **Annealing (Heating):**
 1.  The wafer is heated (annealed) in a Nitrogen (N₂) ambient at about 650-700°C for 60 seconds.
 2.  This heat causes a chemical reaction only where the Ti is touching silicon (the S/D regions) or polysilicon (the gate).
 3.  The result is the formation of low-resistant **Titanium Silicide (TiSi₂) ** on these contacts.
 4.  The unreacted Titanium over the oxide areas (like the spacers and field oxide) simultaneously reacts with the nitrogen ambient to form **Titanium Nitride (TiN)**.
+
 
 This TiN layer can also be used for local communication paths.
 The unreacted Ti and TiN can be selectively etched away, leaving the stable TiSi₂ "silicide" contacts. This is a "self-aligned" process, hence "**salicide**."
@@ -285,6 +359,7 @@ This is the final, multi-step process to build the "wiring" (interconnects) that
 2.  **Mask13** and photoresist are used to pattern the desired wiring paths for Metal 1.
 3.  The Aluminum is plasma etched, removing all Al except for the patterned "wires."
 4.  The resist is stripped.
+
 
 **Higher Metal Layers (M2, M3, ...):**
 1.  Another thick layer of SiO₂ (passivation) is deposited and planarized using CMP.
