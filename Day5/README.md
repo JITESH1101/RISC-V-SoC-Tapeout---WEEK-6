@@ -5,15 +5,21 @@ The foundational principles of maze routing were explored, specifically focusing
 * The routing area is represented as a grid of cells. This grid contains un-routable areas, or **obstacles**, which the path must navigate around. In the provided layout, these obstacles are identified as DECAP1, DECAP2, DECAP3, Block a, and Block b.
 * The algorithm operates in two distinct phases: **wave expansion** (or fill) and **traceback**.
 
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-11-04" src="https://github.com/user-attachments/assets/ad578fc4-c7e0-4f62-b04a-3cbc10673e3d" />
+
+
 The first phase, **wave expansion**, was initiated. This process starts at the Source cell 'S'.
 1.  All accessible, unblocked grid cells adjacent to the source are marked with the number **'1'**.
 2.  This process continues iteratively, like a wave propagating outwards. All cells adjacent to the '1' cells are marked with a **'2'**, all cells adjacent to the '2's are marked with a **'3'**, and so on.
 3.  This expansion wavefront propagates through the open grid cells, navigating around the defined DECAP and Block obstacles. The process continues until the wavefront reaches a cell that is adjacent to the Target 'T'.
 
+ 
 ---
 
 ## 2. Lee’s Algorithm Conclusion
 The two phases of Lee's algorithm were completed to find the final path.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-12-45" src="https://github.com/user-attachments/assets/ad230689-c100-4ef9-85a0-eae8b4f07fe3" />
 
 * **Wave Expansion Completion:** The wave that originated at the source 'S' was propagated until it successfully reached the target 'T'. The grid cells were filled with incrementally increasing numbers (1, 2, 3... up to 9 in the example). These numbers represent the "cost" or distance of each cell from the source. The expansion phase concludes the moment the target cell is reached.
 * **Traceback Phase:** Once the target is found, the second phase, traceback, is initiated. This phase constructs the actual path.
@@ -22,6 +28,8 @@ The two phases of Lee's algorithm were completed to find the final path.
     3.  As shown in the diagram, the path (highlighted in red) is built by stepping from 'T' to a '9', then to an '8', '7', '6', '5', '4', '3', '2', '1', and finally arriving back at the **Source (S)**.
 
 This method guarantees that a path will be found if one exists, and the path found will be the **shortest possible path** in terms of the number of grid cells traversed.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-15-10" src="https://github.com/user-attachments/assets/72466eb8-1eb5-4870-992b-d6c632439d64" />
 
 ---
 
@@ -35,6 +43,13 @@ Typical **Design Rules for metal wires** were examined. For any pair of wires, t
 2.  **Wire Pitch:** This defines the minimum allowed distance from the center of one wire to the center of an adjacent wire.
 3.  **Wire Spacing:** This rule specifies the minimum clean gap or empty space required between the edges of two adjacent wires to prevent capacitive coupling and short circuits.
 
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-21-20" src="https://github.com/user-attachments/assets/f4c52491-8c31-47df-87d9-5c1b10c443d0" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-21-25" src="https://github.com/user-attachments/assets/4d9ccbc0-2e03-4c64-8c99-703936cc8122" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-21-45" src="https://github.com/user-attachments/assets/36b6dd02-b3ab-4370-9a99-7d56498bb2a0" />
+
+
 A major DRC violation, a **Signal Short**, was identified. This is a fatal error where two distinct nets (in this example, Dout3 and Clk Out) are incorrectly connected, which would cause the circuit to fail.
 
 The checks are not limited to horizontal wires. They also apply to **vias**, which are the vertical connections between different metal layers.
@@ -43,9 +58,20 @@ The checks are not limited to horizontal wires. They also apply to **vias**, whi
     1.  **Via Width:** The diameter or size of the via cut itself must meet a specific requirement.
     2.  **Via Spacing:** A minimum spacing must be maintained between adjacent vias to ensure they are distinct and do not merge.
 
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-25-19" src="https://github.com/user-attachments/assets/a1a75bd9-41ee-4f22-94ef-5835ae9d8ea6" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-25-33" src="https://github.com/user-attachments/assets/39b64389-4398-4fdc-9e3f-c16fdc5257ba" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-25-44" src="https://github.com/user-attachments/assets/eba30d3d-b8f0-45a4-b6f8-d0102129a71b" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-25-55" src="https://github.com/user-attachments/assets/dba57c65-57a8-427c-b9af-cb0344f88954" />
+
+
 Once all such violations are fixed (e.g., the "No Signal Short" status is achieved), the layout is considered **DRC Clean**.
 
 Following a DRC-clean layout, the next step is **Parasitics Extraction**. This process analyzes the final, verified geometry to extract the unintended parasitic resistors (R) and capacitors (C) that are now part of the design. These parasitic values are critical for performing accurate timing and power analysis on the final, "as-built" circuit.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-26-16" src="https://github.com/user-attachments/assets/c2bb9e8d-d79d-4a60-aa6c-0b16e1ebe408" />
 
 ---
 
@@ -82,6 +108,8 @@ These preprocessed guides must meet two key requirements:
 ## 6. TritonRoute Feature 2 & 3 - Inter-guide Connectivity and Intra- & Inter-layer Routing
 Deeper features of TritonRoute, focusing on connectivity and routing methodology, were examined.
 
+<img width="3520" height="1785" alt="Screenshot from 2025-11-11 23-04-13" src="https://github.com/user-attachments/assets/41c7897b-a182-45a7-8112-6c5f6843e0df" />
+
 * The router operates under the assumption that the preprocessed route guides for a net already satisfy **inter-guide connectivity**.
 * This connectivity between two guides is defined by two conditions:
     1.  They are connected if they are on the **same metal layer** and have **touching edges**.
@@ -106,6 +134,8 @@ The formal **Problem Statement** for the TritonRoute detail router was establish
 To manage this, a specific method for **Handling Connectivity** is used, which relies on two definitions:
 1.  **Access Point (AP):** An on-grid point on a metal layer within a route guide. It acts as a valid "port" for connecting to other segments, either on lower layers, upper layers, pins, or I/O ports.
 2.  **Access Point Cluster (APC):** A collection of all the APs that belong to the same object (e.g., all the APs on a single pin, or all the APs connecting to a specific lower-layer guide).
+
+![Uploading Screenshot from 2025-11-11 23-05-12.png…]()
 
 These concepts are shown in the illustrations:
 * (a) An AP (blue dot) connects a routing track to a lower-layer segment.
