@@ -189,3 +189,32 @@ The "OpenLANE ASIC Flow" is a detailed, automated process using a specific chain
         3.  "If the checker reports a violation... replace the Fake Diode cell by a real one."
 * **Static Timing Analysis (STA):** This step involves "**RC Extraction**" (using `DEF2SPEF`) to extract parasitic resistance and capacitance. Then, "**STA**" is run using "**OpenSTA (OpenROAD)**." A timing report is generated that calculates the slack (MET) based on data arrival time and data required time.
 * **Physical Verification (DRC & LVS):** **Magic** (the "Magic VLSI Layout Tool") is used for "Design Rules Checking and SPICE Extraction from Layout." **Magic** and **Netgen** are used together for LVS by comparing the "Extracted SPICE by Magic" against the "Verilog netlist."
+
+## LABS ON Open Lane (directory Structure, Design Prep, synthesis and synthesis results)
+
+The following is the pdk structure
+
+```
+pdks/
+└── sky130A/
+    ├── libs.ref/  ← Design Libraries
+    │   └── sky130_fd_sc_hd/
+    │       ├──  lef/      ← Layout format
+    │       ├──  lib/      ← Timing data
+    │       ├── gds/      ← Physical layout
+    │       └──  verilog/  ← Cell models
+    │
+    └──  libs.tech/  ← Technology Files
+        ├──  magic/,  klayout/,  ngspice/
+        ├──  openroad/,  drc/,  lvs/,  pex/
+```
+
+
+
+
+
+
+
+
+
+
