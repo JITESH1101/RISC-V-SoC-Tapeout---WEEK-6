@@ -408,11 +408,11 @@ Condition 3 verified
 
      here,  the abutment of power pins with other cell from library clearly visible
 
-     #### 9. Do Post-Synthesis timing analysis with OpenSTA tool.
+     ####  Post-Synthesis timing analysis with OpenSTA tool.
 
 Since we are having 0 wns after improved timing run we are going to do timing analysis on initial run of synthesis which has lots of violations and no parameters were added to improve timing
 
-Commands to invoke the OpenLANE flow include new lef and perform synthesis 
+the following are the Commands to invoke the OpenLANE flow include new lef and perform synthesis 
 
 ```bash
 # Change directory to openlane flow directory
@@ -443,8 +443,6 @@ set ::env(SYNTH_SIZING) 1
 run_synthesis
 ```
 
-Commands run final screenshot
-
 ![Screenshot from 2024-03-26 05-52-18](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/790d4852-7f1d-47b5-a64f-5735f6064b61)
 
 Newly created `pre_sta.conf` for STA analysis in `openlane` directory
@@ -466,8 +464,6 @@ cd Desktop/work/tools/openlane_working_dir/openlane
 sta pre_sta.conf
 ```
 
-Screenshots of commands run
-
 ![Screenshot from 2024-03-26 06-04-28](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/32def177-5173-4dd7-ba3b-44e37846644c)
 ![Screenshot from 2024-03-26 06-05-07](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d8b8c46a-3a8b-458c-8c75-03f6577f5d17)
 ![Screenshot from 2024-03-26 06-05-53](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/ab396c91-430f-41ca-b9a4-dda72a91c4d5)
@@ -475,7 +471,7 @@ Screenshots of commands run
 
 Since more fanout is causing more delay we can add parameter to reduce fanout and do synthesis again
 
-Commands to include new lef and perform synthesis 
+the following are the Commands to include new lef and perform synthesis 
 
 ```tcl
 # Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
@@ -498,11 +494,10 @@ echo $::env(SYNTH_DRIVING_CELL)
 run_synthesis
 ```
 
-Commands run final screenshot
 
 ![Screenshot from 2024-03-26 06-20-29](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/c5869cf5-ab95-46f9-9fd1-dc91e92455d8)
 
-Commands to run STA in another terminal
+the following are Commands to run STA in another terminal
 
 ```bash
 # Change directory to openlane
@@ -512,14 +507,12 @@ cd Desktop/work/tools/openlane_working_dir/openlane
 sta pre_sta.conf
 ```
 
-Screenshots of commands run
-
 ![Screenshot from 2024-03-26 06-22-31](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/0f3247fc-aaad-4e98-b23e-bdc9a361d08c)
 ![Screenshot from 2024-03-26 06-22-41](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/9fcc3975-0e03-4515-aee5-04b7c1c6a315)
 ![Screenshot from 2024-03-26 06-22-50](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e19db773-3995-4af4-b0a3-188b02fdf454)
 ![Screenshot from 2024-03-26 06-23-01](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/c22c85fb-1a94-4639-a731-da4c364d1a78)
 
-#### 10. Make timing ECO fixes to remove all violations.
+#### Make timing ECO fixes to remove all violations.
 
 OR gate of drive strength 2 is driving 4 fanouts
 
@@ -622,13 +615,13 @@ Commands to verify instance `_14506_`  is replaced with `sky130_fd_sc_hd__or4_4`
 report_checks -from _29043_ -to _30440_ -through _14506_
 ```
 
-Screenshot of replaced instance
+the below is the Screenshot of replaced instance
 
 ![Screenshot from 2024-03-26 10-43-04](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/970b3cb7-fe10-4b5e-99c9-85059714f8f2)
 
 *We started ECO fixes at wns -23.9000 and now we stand at wns -22.6173 we reduced around 1.2827 ns of violation*
 
-#### 11. Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
+#### Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
 
 Now to insert this updated netlist to PnR flow and we can use `write_verilog` and overwrite the synthesis netlist but before that we are going to make a copy of the old old netlist
 
@@ -648,8 +641,6 @@ cp picorv32a.synthesis.v picorv32a.synthesis_old.v
 ls
 ```
 
-Screenshot of commands run
-
 ![Screenshot from 2024-03-26 10-54-15](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/90c90853-0664-44d7-8ff2-573621935870)
 
 Commands to write verilog
@@ -664,8 +655,6 @@ write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/des
 # Exit from OpenSTA since timing analysis is done
 exit
 ```
-
-Screenshot of commands run
 
 ![Screenshot from 2024-03-26 11-02-19](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/c6c8ce7f-5219-41bc-a5a8-47b0e1c62c7c)
 
@@ -709,8 +698,6 @@ unset ::env(LIB_CTS)
 run_cts
 ```
 
-Screenshots of commands run
-
 ![Screenshot from 2024-03-26 11-33-14](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/a0f223bc-3cbb-4bb1-8c7e-d800f1a4efd7)
 ![Screenshot from 2024-03-26 11-33-22](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/9bd610a8-fd5e-452b-94b2-5a5fc76db5e9)
 ![Screenshot from 2024-03-26 11-35-40](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/283d9b5e-fc48-45a3-8548-c68fc8966f46)
@@ -720,7 +707,7 @@ Screenshots of commands run
 ![Screenshot from 2024-03-26 11-39-53](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/45fdc85e-cc32-4b08-954e-bd78dcec0891)
 ![Screenshot from 2024-03-26 12-00-48](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/5deb6b89-c81e-4b4d-a225-badc1f7c7299)
 
-#### 12. Post-CTS OpenROAD timing analysis.
+#### Post-CTS OpenROAD timing analysis.
 
 Commands to be run in OpenLANE flow to do OpenROAD timing analysis with integrated OpenSTA in OpenROAD
 
@@ -765,14 +752,14 @@ report_checks -path_delay min_max -fields {slew trans net cap input_pins} -forma
 exit
 ```
 
-Screenshots of commands run and timing report generated
+the following is the Screenshots of commands run and timing report generated
 
 ![Screenshot from 2024-03-26 12-55-00](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/ee26dfa7-715a-4df7-97e7-4c6e54d16522)
 ![Screenshot from 2024-03-26 12-57-40](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e04a4dfd-000c-406b-bdaa-f5314c4eedef)
 ![Screenshot from 2024-03-26 12-58-12](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/ac27d567-1b72-444d-a638-9be2db677ae2)
 ![Screenshot from 2024-03-26 13-09-57](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e63cac70-072d-4453-992e-076b94f8f1a2)
 
-#### 13. Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
+#### Explore post-CTS OpenROAD timing analysis by removing 'sky130_fd_sc_hd__clkbuf_1' cell from clock buffer list variable 'CTS_CLK_BUFFER_LIST'.
 
 Commands to be run in OpenLANE flow to do OpenROAD timing analysis after changing `CTS_CLK_BUFFER_LIST`
 
