@@ -19,6 +19,8 @@ A set of assumptions was established for capacitance calculation:
 * The load capacitance of each flip-flop (C1, C2, C3, C4) is **25fF**.
 * The input capacitance of the buffer cells (Cbuf1, Cbuf2) is **30fF**.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-16-42" src="https://github.com/user-attachments/assets/45f531d2-d666-437a-aac8-8bdebb1c926c" />
+
 Based on these assumptions, the total capacitance at each driving node was calculated:
 * **Total Cap at node 'B':** Drives C1 and C2. Total Cap = 25fF + 25fF = **50fF**.
 * **Total Cap at node 'C':** Drives C3 and C4. Total Cap = 25fF + 25fF = **50fF**.
@@ -33,6 +35,8 @@ A **Delay Table** was introduced as a 2-dimensional lookup table used to charact
 ## 2. Delay table usage Part 1
 The concept of using the delay tables was put into practice. Full delay tables for CBUF '1' (with delay values x1 through x24) and CBUF '2' (with delay values y1 through y24) were presented.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-32-59" src="https://github.com/user-attachments/assets/11fa3555-3d75-4932-b1ba-9f56978c084b" />
+
 * A signal with an **input slew of 40ps** was shown to be arriving at the input of the Cbuf1 buffer (node 'A').
 * The **output load at node 'A'** was previously calculated to be **60fF** (from the two Cbuf2 buffers).
 * To find the delay of Cbuf1, the 'Delay Table for CBUF '1'' would be referenced. The delay value, **x9'**, is found by looking at the row for 40ps input slew and finding the corresponding value for a 60fF load.
@@ -42,6 +46,8 @@ The concept of using the delay tables was put into practice. Full delay tables f
 
 ## 3. Delay table usage Part 2
 The delay calculation was continued to the second level of the buffer tree.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-35-17" src="https://github.com/user-attachments/assets/1d571152-3eb1-42d2-8423-1027cac04b38" />
 
 * It was assumed that the output signal from Cbuf1 (after propagating through it) now has a **slew of 60ps**. This 60ps slew becomes the input slew for the Cbuf2 buffers at nodes 'B' and 'C'.
 * The **output load at nodes 'B' and 'C'** was previously calculated to be **50fF** (from the two flip-flops each).
@@ -55,11 +61,15 @@ A note, "Active only under certain conditions," was highlighted. This points to 
 ## 4. Setup timing analysis and introduction to flip-flop setup time
 A **Timing Analysis with Ideal Clocks** was performed. This analysis assumes the clock signal CLK arrives at the Launch Flop and Capture Flop at the exact same instant.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-40-40" src="https://github.com/user-attachments/assets/c7f15fcf-29cc-4376-951a-c5f14cffb5cf" />
+
 * The basic timing path consists of a Launch Flop, a cloud of combinational logic (with delay **$\Theta$**), and a Capture Flop.
 * Given system specifications **Clock Frequency (F) = 1GHz**, the **Clock Period (T)** is 1/F = **1ns**.
 * For the circuit to function correctly, data launched at time 0 must travel through the logic ($\Theta$) and be captured at time T. The data must arrive before the next clock edge. The initial, simplified equation for this is **$\Theta < T$**.
 
 The internal structure of a D-flop was shown to be composed of multiplexers. A finite amount of time, defined as **'S' (Setup Time)**, is required for the data at the 'D' input to propagate internally (e.g., to node $Q_M$) before the active clock edge arrives.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-42-33" src="https://github.com/user-attachments/assets/0658dc61-4ab4-4502-a53a-fe0283970fe8" />
 
 * This setup time 'S' creates a small window before the capture clock edge at time T, during which the data input must be stable.
 * The setup equation was refined to account for this: **$\Theta < (T - S)$**. The data must arrive before this setup window begins.
@@ -69,10 +79,14 @@ The internal structure of a D-flop was shown to be composed of multiplexers. A f
     * The equation becomes: $\Theta < (1ns - 0.01ns)$
     * Therefore, the maximum allowed delay for the combinational logic is **$\Theta < 0.99ns$**.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-42-40" src="https://github.com/user-attachments/assets/59d9a946-7952-4c8d-8334-be818af888a9" />
+
 ---
 
 ## 5. Introduction to clock jitter and uncertainty
 The concept of an "Ideal Clock" was replaced with a real-world model. On a physical chip, the clock edge will not arrive at the exact same time every cycle.
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-44-06" src="https://github.com/user-attachments/assets/09a20244-0c68-42da-a0c3-22eee14541c7" />
 
 * **Jitter** was defined as the temporary variation of the Clock period. This is represented as a "window" of time around the ideal clock edge (at 0 and T) within which the clock can arrive.
 * To safely model this behavior for timing analysis, a parameter called "**Uncertainty**" (**SU** - Setup Uncertainty) is introduced.
@@ -85,9 +99,15 @@ The concept of an "Ideal Clock" was replaced with a real-world model. On a physi
     * The final equation becomes: $\Theta < (1ns - 0.01ns - 0.09ns)$
     * This leaves an Expected maximum logic delay of **$\Theta < 0.9ns$**.
 
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-44-41" src="https://github.com/user-attachments/assets/1516d8ce-143c-4aec-ab6f-a9490b73a3c8" />
+
 This concept was then applied to a physical chip layout, where timing paths were identified.
 For a path from Din1 to Dout1, the total combinational delay $\Theta$ was broken down into its constituent parts:
 > $\Theta$ = FF1(CLK-Q delay) + Wire delay estimate1 + delay of cell '1' + Wire delay estimate2 + delay of cell '2' + Wire delay estimate3
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-45-02" src="https://github.com/user-attachments/assets/5e5b36c1-f444-4403-b0e2-e6c2d25e8536" />
+
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-45-14" src="https://github.com/user-attachments/assets/47f2cf57-00c5-464f-a07c-232782e58dd9" />
 
 ---
 
@@ -97,19 +117,28 @@ The process of **Clock Tree Synthesis (CTS)** was examined. The primary goal of 
 * A key objective of CTS is to **minimize skew**, which is the difference in arrival time of the clock signal at different flops (skew = t2 - t1). Ideally, the skew should be near 0 ps.
 * A "Bad Tree" example demonstrated how inefficient, unbalanced routing can lead to large differences in wire length, causing significant and unacceptable skew.
 * The **H-Tree** algorithm was presented as a superior routing methodology. By building a symmetrical, balanced, 'H'-shaped structure, it ensures that the wire lengths from the clock source to all the endpoints are identical, thus minimizing skew.
+  
+<img width="3526" height="1985" alt="Screenshot from 2025-11-10 22-49-45" src="https://github.com/user-attachments/assets/e2645738-8d2c-4f97-b4fa-e2739c67642f" />
 
 A clock net on a chip is not an ideal wire; it is a distributed **RC network**, with its own resistance (R) and capacitance (C). This RC network causes propagation delay and signal degradation (poor slew).
 * The **Elmore delay** model (Time constant T = RC) was shown as the model for this delay.
 * To combat this RC delay and maintain signal integrity, **buffers (Buf)** are inserted at strategic points within the H-Tree. These buffers regenerate the clock signal, restoring its sharpness and strength, allowing it to travel across the chip.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 22-50-56" src="https://github.com/user-attachments/assets/46dfa02f-6dcb-47d6-811a-8975f11bf7d7" />
 
 ---
 
 ## 7. Crosstalk and clock net shielding
 **Crosstalk** was identified as a major signal integrity problem. It is caused by coupling capacitance ($C_M$) between adjacent nets. A signal transition on an "aggressor" net can induce a voltage spike, or **glitch**, on a parallel "victim" net.
 
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 22-54-23" src="https://github.com/user-attachments/assets/181f63ad-e376-414a-ba87-9465c666723f" />
+
+
 * A critical failure case was presented: a glitch on an aggressor net coupling onto the **Reset (RST) line** of a memory block. This spurious reset pulse can corrupt the memory, leading to incorrect data and inaccurate chip functionality.
 * Crosstalk also impacts timing by causing **delta delay**. If an aggressor net switches, it can add extra delay ($\Delta$) to the victim net's signal.
 * This effect was shown to directly create skew. If two clock paths (L1, L2) were perfectly balanced (Delay = D), and an aggressor net adds a delta delay ($\Delta$) to L2, its new delay becomes D + $\Delta$. This results in a skew of $\Delta$ where none existed before.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 22-56-08" src="https://github.com/user-attachments/assets/067c2db2-ae79-4e2d-815e-8a0bdc957aa4" />
 
 The primary solution to this is **Clock Net Shielding**. This technique involves routing sensitive nets (like the clock) "shielded" between VDD (power) and VSS (ground) wires. These shield wires absorb any coupled charge from aggressors, preventing glitches and delta delays from corrupting the clock signal.
 
@@ -133,6 +162,8 @@ The final setup equation, **DAT < DRT**, is:
 
 **Setup Slack** was defined as the margin in the timing: **Slack = DRT - DAT**. This value must be positive or zero for the design to meet setup timing.
 
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 22-59-58" src="https://github.com/user-attachments/assets/50861bf1-94bd-4cf3-a894-47ff83a814e5" />
+
 ---
 
 ## 9. Hold timing analysis using real clocks
@@ -155,3 +186,11 @@ The final hold equation, **DAT > DRT**, is:
 
 Finally, the components of the clock delays were detailed. $\Delta_1$ and $\Delta_2$ are the sum of all real wire RC delays and buffer delays along their respective clock paths.
 **Skew** was formally defined as the absolute difference between these clock path delays: **SKEW = |$\Delta_1 - \Delta_2$|**. This skew is a critical factor in both setup and hold calculations.
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-02-38" src="https://github.com/user-attachments/assets/1806aa5d-d65a-4d85-9a02-5b353510d0dc" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-03-27" src="https://github.com/user-attachments/assets/873aa324-c4b0-4ad0-8620-50cec2274214" />
+
+<img width="3564" height="1985" alt="Screenshot from 2025-11-10 23-03-44" src="https://github.com/user-attachments/assets/3c14defb-2f79-4b07-a4ac-36ff1a3b76f1" />
+
+
